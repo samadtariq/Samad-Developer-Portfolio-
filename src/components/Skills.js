@@ -1,152 +1,125 @@
+import { useEffect, useRef } from 'react';
 import '../styles.css';
 
 function Skills() {
-    return (
-    
+  const skillRefs = useRef([]);
 
-            <section id="skills" className="section skills-section">
-                <div className="section-container">
-                    <div className="section-header">
-                        <span className="section-number">02</span>
-                        <h2 className="section-title">
-                            <span className="title-bracket">&lt;</span>
-                            <span className="title-text" data-text-en="Skills" data-text-ar="المهارات">Skills</span>
-                            <span className="title-bracket">/&gt;</span>
-                        </h2>
-                        <div className="section-line"></div>
+  // Animate skill bars and percentages on scroll
+  useEffect(() => {
+    const animateSkill = el => {
+      const percent = parseInt(el.getAttribute('data-percent'));
+      const progress = el.querySelector('.skill-progress');
+      const percentText = el.querySelector('.skill-percent');
+
+      let current = 0;
+      const step = Math.ceil(percent / 40);
+
+      const update = () => {
+        current += step;
+        if (current >= percent) {
+          current = percent;
+        }
+
+        progress.style.width = current + '%';
+        percentText.textContent = current + '%';
+
+        if (current < percent) {
+          requestAnimationFrame(update);
+        }
+      };
+
+      update();
+    };
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateSkill(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.10 }
+    );
+
+    skillRefs.current.forEach(el => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="skills" className="section skills-section">
+      <div className="section-container">
+        <div className="section-header">
+          <span className="section-number">02</span>
+
+          <h2 className="section-title">
+            <span className="title-bracket">&lt;</span>
+            <span className="title-text">Skills</span>
+            <span className="title-bracket">/&gt;</span>
+          </h2>
+
+          <div className="section-line"></div>
+        </div>
+
+        <div className="skills-grid">
+          {[
+            {
+              title: 'Frontend',
+              skills: [
+                { name: 'React Js', percent: 95 },
+                { name: 'Bootstrap & jQuery', percent: 85 },
+                { name: 'WordPress (Theme)', percent: 90 },
+                { name: 'Angular Js', percent: 88 }
+              ]
+            },
+            {
+              title: 'Backend',
+              skills: [
+                { name: 'Node.js', percent: 92 },
+                { name: 'ASP.NET', percent: 90 },
+                { name: 'MongoDB & SQL Server', percent: 85 },
+                { name: 'WordPress (PHP)', percent: 80 }
+              ]
+            },
+            {
+              title: 'Tools & Others',
+              skills: [
+                { name: 'Git & GitHub', percent: 95 },
+                { name: 'Microsoft Office', percent: 75 },
+                { name: 'Canva', percent: 70 },
+                { name: 'Figma', percent: 88 }
+              ]
+            }
+          ].map((category, cIndex) => (
+            <div className="skill-category" key={cIndex}>
+              <h3 className="category-title">{category.title}</h3>
+
+              <div className="skill-items">
+                {category.skills.map((skill, sIndex) => (
+                  <div
+                    className="skill-item"
+                    data-percent={skill.percent}
+                    key={sIndex}
+                    ref={el => (skillRefs.current[cIndex * 10 + sIndex] = el)}
+                  >
+                    <div className="skill-header">
+                      <span className="skill-name">{skill.name}</span>
+                      <span className="skill-percent">0%</span>
                     </div>
-
-                    <div className="skills-grid">
-                        <div className="skill-category">
-                            <h3 className="category-title" data-text-en="Frontend" data-text-ar="الواجهة الأمامية">Frontend</h3>
-                            <div className="skill-items">
-                                <div className="skill-item" data-skill="React Js" data-percent="95">
-                                    <div className="skill-header">
-                                        <span className="skill-name">React Js</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Bootstrap/jQuery" data-percent="85">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Bootstrap & jQuery</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="WordPress" data-percent="90">
-                                    <div className="skill-header">
-                                        <span className="skill-name">WordPress (Theme)</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Angular Js" data-percent="88">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Angular Js</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="skill-category">
-                            <h3 className="category-title" data-text-en="Backend" data-text-ar="الخلفية">Backend</h3>
-                            <div className="skill-items">
-                                <div className="skill-item" data-skill="Node.js" data-percent="92">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Node.js</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Express" data-percent="90">
-                                    <div className="skill-header">
-                                        <span className="skill-name">ASP.NET</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="MongoDB" data-percent="85">
-                                    <div className="skill-header">
-                                        <span className="skill-name">MongoDB & SQL Server</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="PostgreSQL" data-percent="80">
-                                    <div className="skill-header">
-                                        <span className="skill-name">WordPress (PHP)</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="skill-category">
-                            <h3 className="category-title" data-text-en="Tools & Others" data-text-ar="الأدوات وغيرها">Tools & Others</h3>
-                            <div className="skill-items">
-                                <div className="skill-item" data-skill="Git & GitHub" data-percent="95">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Git & GitHub</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Microsoft Office" data-percent="75">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Microsoft Office</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Canva" data-percent="70">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Canva</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                                <div className="skill-item" data-skill="Figma" data-percent="88">
-                                    <div className="skill-header">
-                                        <span className="skill-name">Figma</span>
-                                        <span className="skill-percent">0%</span>
-                                    </div>
-                                    <div className="skill-bar">
-                                        <div className="skill-progress"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="skill-bar">
+                      <div className="skill-progress"></div>
                     </div>
-                </div>
-            </section>
-    
-    )
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Skills;

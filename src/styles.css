@@ -291,7 +291,7 @@ img {
 }
 
 .lang-toggle,
-.theme-toggle,
+
 .menu-toggle {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -342,7 +342,22 @@ img {
 .main-content {
     margin-top: 80px;
 }
+/* mobile */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background: #111;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+  }
 
+  .nav-menu.open {
+    display: flex;
+  }
+}
 .hero-section {
     min-height: 100vh;
     display: flex;

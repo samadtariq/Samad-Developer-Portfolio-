@@ -1,13 +1,11 @@
 import { useState } from "react";
-import '../styles.css';
+import "../styles.css";
+
 function Contact() {
-   
-     
-
-
+    const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-   
+        
     <header className="main-header" id="header">
         <nav className="nav-container">
             <div className="nav-brand">
@@ -18,7 +16,7 @@ function Contact() {
                 </div>
             </div>
             
-            <div className="nav-menu" id="navMenu">
+            <div className={`nav-menu ${menuOpen ? "active" : ""}`} id="navMenu">
                 <a href="#home" className="nav-link active" data-section="home">
                     <i className="fas fa-home"></i>
                     <span className="nav-text" data-text-en="Home" data-text-ar="الرئيسية">Home</span>
@@ -46,15 +44,34 @@ function Contact() {
             </div>
             
             <div className="nav-controls">
-                <button className="lang-toggle" id="langToggle" title="Toggle Language">
-                    <i className="fas fa-download"></i>
-                    <span className="lang-text">Download CV</span>
-                </button>
-             
+                     
+                    <button
+                        className="lang-toggle"
+                        title="Download CV"
+                        onClick={() => {
+                            const link = document.createElement("a");
+                            link.href = "/Samad-Resume.pdf";
+                            link.download = "Samad-Resume.pdf";
+                            link.click();
+                        }}
+                    >
+                        <i className="fas fa-download"></i>
+                        <span className="lang-text">Download CV</span>
+                    </button>
+
+                    <button
+                        className={`menu-toggle ${menuOpen ? "active" : ""}`}
+                        onClick={() => setMenuOpen(!menuOpen)}
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
             </div>
         </nav>
     </header>
-
+      
     );
 }
 

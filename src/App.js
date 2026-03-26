@@ -10,6 +10,7 @@ import Contacts from './components/Contacts.js';
 import Skills from './components/Skills.js';
 import Experience from './components/Experience.js';
 import Projects from './components/Projects.js';
+import { useState } from 'react';
 function App() {
 
 
@@ -18,6 +19,7 @@ function App() {
     <>
       <Contact />
       <main className="main-content">
+
         <Home />
         <About />
         <Skills />
