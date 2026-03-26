@@ -11,6 +11,7 @@ import Skills from './components/Skills.js';
 import Experience from './components/Experience.js';
 import Projects from './components/Projects.js';
 import { useState } from 'react';
+import WhatsAppButton from './components/WhatsAppButton.js';
 function App() {
 
 
@@ -26,6 +27,8 @@ function App() {
         <Experience />
         <Projects />
         <Contacts />
+        <WhatsAppButton/>
+
       </main>
       <Test />
     </>

@@ -88,7 +88,7 @@ function About() {
 
             <div className="about-stats">
               {[
-                { value: 20, label: 'Projects' },
+                { value: 10, label: 'Projects' },
                 { value: 2, label: 'Years Experience' },
                 { value: 5, label: 'Clients' }
               ].map((stat, index) => (

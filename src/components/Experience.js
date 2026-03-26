@@ -148,7 +148,7 @@ function Experience() {
               <div className="timeline-achievements">
                 <div className="achievement-item">
                   <i className="fas fa-check-circle"></i>
-                  <span>Completed 30+ projects</span>
+                  <span>Completed 1 projects</span>
                 </div>
 
                 <div className="achievement-item">

@@ -50,8 +50,8 @@ function Contact() {
                         title="Download CV"
                         onClick={() => {
                             const link = document.createElement("a");
-                            link.href = "/Samad-Resume.pdf";
-                            link.download = "Samad-Resume.pdf";
+                            link.href = "/Samad Developer CV.pdf";
+                            link.download = "Samad Developer CV.pdf";
                             link.click();
                         }}
                     >
