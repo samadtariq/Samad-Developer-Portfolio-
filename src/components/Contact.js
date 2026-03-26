@@ -47,17 +47,10 @@ function Contact() {
             
             <div className="nav-controls">
                 <button className="lang-toggle" id="langToggle" title="Toggle Language">
-                    <i className="fas fa-language"></i>
-                    <span className="lang-text">AR</span>
+                    <i className="fas fa-download"></i>
+                    <span className="lang-text">Download CV</span>
                 </button>
-                <button className="theme-toggle" id="themeToggle" title="Toggle Theme">
-                    <i className="fas fa-moon"></i>
-                </button>
-                <button className="menu-toggle" id="menuToggle" title="Toggle Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+             
             </div>
         </nav>
     </header>

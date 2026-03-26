@@ -71,7 +71,7 @@ function Home() {
                         <div className="profile-image-frame">
                             <div className="profile-image" id="profileImage">
                                 <div className="profile-placeholder">
-                                    <img src="WhatsApp Image 2026-03-25 at 12.20.07 PM.jpeg" alt="Profile Image" />
+                                    <img src="WhatsApp Image 2026-03-25 at 12.20.07 PM.png" alt="Profile Image" />
                                 </div>
                             </div>
                         </div>
