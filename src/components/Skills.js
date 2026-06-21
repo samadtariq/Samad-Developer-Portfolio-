@@ -70,8 +70,8 @@ function Skills() {
               skills: [
                 { name: 'React Js', percent: 95 },
                 { name: 'Bootstrap & jQuery', percent: 85 },
-                { name: 'WordPress (Theme)', percent: 90 },
-                { name: 'Angular Js', percent: 88 }
+                { name: 'WordPress (Theme)', percent: 99 },
+                { name: 'Angular Js', percent: 65 }
               ]
             },
             {
@@ -88,7 +88,7 @@ function Skills() {
               skills: [
                 { name: 'Git & GitHub', percent: 95 },
                 { name: 'Microsoft Office', percent: 75 },
-                { name: 'Canva', percent: 70 },
+                { name: 'Canva', percent: 90 },
                 { name: 'Figma', percent: 88 }
               ]
             }

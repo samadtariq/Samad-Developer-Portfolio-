@@ -1,50 +1,92 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles.css";
 
 function Contact() {
     const [menuOpen, setMenuOpen] = useState(false);
 
+    // Close menu when a nav link is clicked
+    const handleNavClick = () => {
+        setMenuOpen(false);
+    };
+
+    // Close menu on outside click
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (menuOpen && !e.target.closest('.nav-container')) {
+                setMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
+    }, [menuOpen]);
+
+    // Prevent body scroll when menu is open
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [menuOpen]);
+
+    // Highlight active nav link on scroll
+    useEffect(() => {
+        const sections = document.querySelectorAll('section[id]');
+        const links = document.querySelectorAll('.nav-link');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    links.forEach(link => link.classList.remove('active'));
+                    const active = document.querySelector(`.nav-link[data-section="${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { threshold: 0.4 });
+
+        sections.forEach(s => observer.observe(s));
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        
-    <header className="main-header" id="header">
-        <nav className="nav-container">
-            <div className="nav-brand">
-                <div className="brand-logo">
-                    <span className="logo-bracket">&lt;</span>
-                    <span className="logo-text">Samad</span>
-                    <span className="logo-bracket">/&gt;</span>
+        <header className="main-header" id="header">
+            <nav className="nav-container">
+                <div className="nav-brand">
+                    <div className="brand-logo">
+                        <span className="logo-bracket">&lt;</span>
+                        <span className="logo-text">Samad</span>
+                        <span className="logo-bracket">/&gt;</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div className={`nav-menu ${menuOpen ? "active" : ""}`} id="navMenu">
-                <a href="#home" className="nav-link active" data-section="home">
-                    <i className="fas fa-home"></i>
-                    <span className="nav-text" data-text-en="Home" data-text-ar="الرئيسية">Home</span>
-                </a>
-                <a href="#about" className="nav-link" data-section="about">
-                    <i className="fas fa-user"></i>
-                    <span className="nav-text" data-text-en="About" data-text-ar="عني">About</span>
-                </a>
-                <a href="#skills" className="nav-link" data-section="skills">
-                    <i className="fas fa-code"></i>
-                    <span className="nav-text" data-text-en="Skills" data-text-ar="المهارات">Skills</span>
-                </a>
-                <a href="#experience" className="nav-link" data-section="experience">
-                    <i className="fas fa-briefcase"></i>
-                    <span className="nav-text" data-text-en="Experience" data-text-ar="الخبرة">Experience</span>
-                </a>
-                <a href="#projects" className="nav-link" data-section="projects">
-                    <i className="fas fa-rocket"></i>
-                    <span className="nav-text" data-text-en="Projects" data-text-ar="المشاريع">Projects</span>
-                </a>
-                <a href="#contact" className="nav-link" data-section="contact">
-                    <i className="fas fa-envelope"></i>
-                    <span className="nav-text" data-text-en="Contact" data-text-ar="التواصل">Contact</span>
-                </a>
-            </div>
-            
-            <div className="nav-controls">
-                     
+
+                {/* Overlay behind menu on mobile */}
+                {menuOpen && (
+                    <div
+                        className="nav-overlay"
+                        onClick={() => setMenuOpen(false)}
+                    />
+                )}
+
+                <div className={`nav-menu ${menuOpen ? "active" : ""}`} id="navMenu">
+                    {[
+                        { href: '#home', icon: 'fa-home', label: 'Home', section: 'home' },
+                        { href: '#about', icon: 'fa-user', label: 'About', section: 'about' },
+                        { href: '#skills', icon: 'fa-code', label: 'Skills', section: 'skills' },
+                        { href: '#experience', icon: 'fa-briefcase', label: 'Experience', section: 'experience' },
+                        { href: '#projects', icon: 'fa-rocket', label: 'Projects', section: 'projects' },
+                        { href: '#contact', icon: 'fa-envelope', label: 'Contact', section: 'contact' },
+                    ].map(({ href, icon, label, section }) => (
+                        <a
+                            key={section}
+                            href={href}
+                            className="nav-link"
+                            data-section={section}
+                            onClick={handleNavClick}
+                        >
+                            <i className={`fas ${icon}`}></i>
+                            <span className="nav-text">{label}</span>
+                        </a>
+                    ))}
+                </div>
+
+                <div className="nav-controls">
                     <button
                         className="lang-toggle"
                         title="Download CV"
@@ -62,16 +104,15 @@ function Contact() {
                     <button
                         className={`menu-toggle ${menuOpen ? "active" : ""}`}
                         onClick={() => setMenuOpen(!menuOpen)}
+                        aria-label="Toggle menu"
                     >
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-
-            </div>
-        </nav>
-    </header>
-      
+                </div>
+            </nav>
+        </header>
     );
 }
 

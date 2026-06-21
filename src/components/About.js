@@ -131,7 +131,7 @@ function About() {
                   <span className="code-comma">,</span>
                   <span className="code-string">'WordPress'</span>
                   <span className="code-comma">,</span>
-                  <span className="code-string">'ASP.NET'</span>
+                  <span className="code-string">'Node'</span>
                   <span className="code-bracket">]</span>
                   <span className="code-comma">,</span>
                 </div>
